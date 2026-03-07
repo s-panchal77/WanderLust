@@ -1,0 +1,18 @@
+npm init -y
+npm i express
+npm i ejs
+npm i mongoose
+
+==============================================
+
+create ----> `app.js`
+
+==============================================
+
+echo "# WanderLust" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/s-panchal77/WanderLust.git
+git push -u origin main
