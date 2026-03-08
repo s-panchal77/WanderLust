@@ -3,16 +3,30 @@ npm i express
 npm i ejs
 npm i mongoose
 
-==============================================
-
 create ----> `app.js`
 
 ==============================================
 
-echo "# WanderLust" >> README.md
+FOR FIRST TIME:
+````````````````````
 git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
 git remote add origin https://github.com/s-panchal77/WanderLust.git
-git push -u origin main
+git add .
+git commit -m "MESSAGE"
+git push -u origin master
+
+
+REPEATED:
+``````````````
+🔹Multiple Files:
+
+git add .
+git commit -m "MESSAGE"
+git push
+
+
+🔹Single File:
+
+git add src/components/Manager.jsx
+git commit -m "Fixed savePassword function"
+git push
