@@ -40,9 +40,15 @@
                     </ul>
 
                     <!-- Buttons -->
-                    <div class="d-flex justify-content-between">
-                        <a href="/listings" class="btn btn-secondary">Back</a>
-                        <a href="/listings/<%= listing._id %>/edit" class="btn btn-warning">Edit</a>
+                    <div class="d-flex gap-2">                    
+                      <a href="/listings" class="btn btn-secondary w-100">Back</a>                    
+                      <a href="/listings/<%= listing._id %>/edit" class="btn btn-warning w-100">Edit</a>
+                    
+                      <!-- DELETE FORM -->
+                      <form action="/listings/<%= listing._id %>" method="POST" class="w-100">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger w-100">Delete</button>
+                      </form>                  
                     </div>
                 </div>
 
