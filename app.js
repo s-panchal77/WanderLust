@@ -1,4 +1,3 @@
-
 // app.js
 
 const express = require("express");
@@ -6,6 +5,7 @@ const app = express();
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const path = require("path");
+const methodOverride = require("method-override");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -21,60 +21,58 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 
+
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === "object" && "_method" in req.body) {
+    let method = req.body._method;
+    delete req.body._method;
+    return method;
+  }
+}));
+
+
 app.get("/", (req, res) => {
   res.send("Hi, i am root");
 });
 
-// INDEX Route
+// Index Route
 app.get("/listings", async (req, res) => {
   const allListings = await Listing.find({});
   res.render("listings/index", { allListings });
 });
 
-// NEW Route
+// New Route
 app.get("/listings/new", (req, res) => {
   res.render("listings/new");
 });
 
-// CREATE Route
+// Create Route
 app.post("/listings", async (req, res) => {
-  try {
-    const newListing = new Listing(req.body.listing); // ✅ correct
-    await newListing.save();
-    res.redirect("/listings");
-  } catch (err) {
-    console.log(err);
-    res.send("Error creating listing");
-  }
+  const newListing = new Listing(req.body.listing); // #Logic
+  await newListing.save();
+  res.redirect("/listings");
 });
 
-// SHOW Route
+// Show Route
 app.get("/listings/:id", async (req, res) => {
   let { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.send("Invalid ID");
-  }
-
   const listing = await Listing.findById(id);
   res.render("listings/show", { listing });
 });
 
+// Edit Route
+app.get("/listings/:id/edit", async (req, res) => {
+  let { id } = req.params;
+  const listing = await Listing.findById(id);
+  res.render("listings/edit", { listing });
+});
 
-
-
-// app.get("/testListing", async (req,res) =>{
-//   let sampleListing = new Listing({
-//     title: "My Home",
-//     description: "By the beach",
-//     price: 1200,
-//     location: "Fregarencia, Sumanio",
-//     country: "Colambo"
-//   });
-//   await sampleListing.save();
-//   console.log("Sample was saved");
-//   res.send("Successfull testing");
-// }),
+// Update Route
+app.put("/listings/:id", async (req, res) => {
+  let { id } = req.params;
+  await Listing.findByIdAndUpdate(id, req.body.listing);
+  res.redirect(`/listings/${id}`);
+});
 
 app.listen(8080, () => {
   console.log("Server is listening to port 8080");
