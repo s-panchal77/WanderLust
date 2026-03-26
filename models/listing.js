@@ -6,19 +6,25 @@ const listingSchema = new Schema({
     type: String,
     required: true,
   },
+
   description: String,
+
   image: {
-    type: String,
-    default:
-      "https://unsplash.com/photos/river-flowing-through-a-dense-forest-towards-mountains-WQW0uTofZiE",
-    // Fall back to the default URL if an empty string is provided.
-    set: (v) =>
-      v === ""
-        ? "https://unsplash.com/photos/river-flowing-through-a-dense-forest-towards-mountains-WQW0uTofZiE"
-        : v,
+    url: {
+      type: String,
+      default:
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e", // ✅ correct image URL
+    },
+    filename: {
+      type: String,
+      default: "listingimage",
+    },
   },
+
   price: Number,
+
   location: String,
+
   country: String,
 });
 
