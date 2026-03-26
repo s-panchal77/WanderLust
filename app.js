@@ -1,3 +1,4 @@
+
 // app.js
 
 const express = require("express");
@@ -9,12 +10,8 @@ const path = require("path");
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
 main()
-  .then(() => {
-    console.log("connect to DB");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+  .then(() => console.log("connect to DB"))
+  .catch((err) => console.log(err));
 
 async function main() {
   await mongoose.connect(MONGO_URL);
@@ -28,18 +25,43 @@ app.get("/", (req, res) => {
   res.send("Hi, i am root");
 });
 
-// Index Route
+// INDEX Route
 app.get("/listings", async (req, res) => {
   const allListings = await Listing.find({});
   res.render("listings/index", { allListings });
 });
 
-// Show Route
+// NEW Route
+app.get("/listings/new", (req, res) => {
+  res.render("listings/new");
+});
+
+// CREATE Route
+app.post("/listings", async (req, res) => {
+  try {
+    const newListing = new Listing(req.body.listing); // ✅ correct
+    await newListing.save();
+    res.redirect("/listings");
+  } catch (err) {
+    console.log(err);
+    res.send("Error creating listing");
+  }
+});
+
+// SHOW Route
 app.get("/listings/:id", async (req, res) => {
   let { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.send("Invalid ID");
+  }
+
   const listing = await Listing.findById(id);
   res.render("listings/show", { listing });
 });
+
+
+
 
 // app.get("/testListing", async (req,res) =>{
 //   let sampleListing = new Listing({
@@ -53,7 +75,6 @@ app.get("/listings/:id", async (req, res) => {
 //   console.log("Sample was saved");
 //   res.send("Successfull testing");
 // }),
-
 
 app.listen(8080, () => {
   console.log("Server is listening to port 8080");

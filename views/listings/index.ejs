@@ -6,17 +6,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WanderLust</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h3>All Listings</h3>
-    <ul>
+
+<body class="bg-light">
+
+<div class="container mt-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>All Listings</h2>
+        <a href="/listings/new" class="btn btn-success">+ Create New</a>
+    </div>
+
+    <!-- Listings Grid -->
+    <div class="row">
+
         <% for(let listing of allListings){ %>
-        <li>
-            <a href="/listings/<%= listing._id %>">
-                <%= listing.title %>
-            </a>
-        </li>
-    <% } %>
-</ul>
+
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100">
+
+                    <!-- Image -->
+                    <img src="<%= listing.image.url %>" class="card-img-top" style="height: 200px; object-fit: cover;">
+
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+                                <%= listing.title %>
+                            </a>
+                        </h5>
+
+                        <p class="card-text text-muted">
+                            <%= listing.location %>, <%= listing.country %>
+                        </p>
+
+                        <p class="fw-bold">
+                            ₹ <%= listing.price.toLocaleString("en-IN") %>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        <% } %>
+
+    </div>
+
+</div>
+
 </body>
 </html>
