@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
+const ejsMate = require("ejs-mate");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -20,16 +21,18 @@ async function main() {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
+app.engine("ejs", ejsMate);
+app.use(express.static(path.join(__dirname, "public")));
 
-
-app.use(methodOverride(function (req, res) {
-  if (req.body && typeof req.body === "object" && "_method" in req.body) {
-    let method = req.body._method;
-    delete req.body._method;
-    return method;
-  }
-}));
-
+app.use(
+  methodOverride(function (req, res) {
+    if (req.body && typeof req.body === "object" && "_method" in req.body) {
+      let method = req.body._method;
+      delete req.body._method;
+      return method;
+    }
+  }),
+);
 
 app.get("/", (req, res) => {
   res.send("Hi, i am root");
