@@ -55,73 +55,75 @@ body {
 .f-info {
     text-align: center;
     display: flex;
-    height: 8rem;
+    height: 6rem;
     background: #ebebeb;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: space-evenly;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    align-items: center;   /* vertical center */
 }
 
 /* Cards */
-/* .listing-card {
+.listing-card {
     border: none !important;
+    border-radius: 1rem !important;
+    overflow: hidden;   /* 🔥 IMPORTANT (fixes image corners) */
     margin-bottom: 2rem;
 }
 
 .card-img-top {
-    border-radius: 1rem !important;
-    width: 100% !important;
-    object-fit: cover !important;
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0;   /* ❌ remove separate radius */
 }
 
 .card-body {
-    padding: 0 !important;
+    padding: 1rem !important;
 }
 
-.card-text p {
-    font-weight: 400 !important;
+.card-text {
+    font-weight: 400;
 }
 
 .listing-link {
     text-decoration: none;
-} */
+    color: inherit;
+}
 
-/* Card Effect*/
-/* 
+/* Card Hover Effect */
 .card-img-overlay {
     opacity: 0;
+    transition: 0.2s ease-in-out;
 }
 
 .card-img-overlay:hover {
     opacity: 0.15;
     background: #fff;
-} */
-
-/* New Page */
-/* .add-btn {
-    background-color: #fe424d !important;
-    border: none !important;
-} */
-
-/* Edit page */
-/* .edit-btn {
-    background-color: #fe424d !important;
-    border: none !important;
-} */
-/* Show page */
-/* .show-img{
-    height: 30vh;
 }
-.btns{
-    display: flex;
-}
-.show-card{
-    padding-left: 0%;
-    padding-right: 0%;
-} */
 
-/* Map */
-/* #map {
-    width: 100%;
-    height: 400px;
-} */
+/* Form Styling Improvement */
+.add-btn {
+    background-color: #fe424d;
+    border: none;
+}
+
+.add-btn:hover {
+    background-color: #e63946;
+}
+
+/* Center form properly */
+.row {
+    margin-top: 1rem;
+}
+
+/* Input focus (nice UX) */
+.form-control:focus {
+    border-color: #fe424d;
+    box-shadow: 0 0 0 0.2rem rgba(254, 66, 77, 0.25);
+}
