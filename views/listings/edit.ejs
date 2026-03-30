@@ -5,10 +5,7 @@
 
     <h3 class="mb-4">Edit your Listing</h3>
 
-    <!-- ✅ FIXED FORM -->
     <form method="POST" action="/listings/<%= listing._id %>" novalidate class="needs-validation">
-
-      <!-- 🔥 REQUIRED FOR PUT -->
       <input type="hidden" name="_method" value="PUT">
 
       <!-- TITLE -->
